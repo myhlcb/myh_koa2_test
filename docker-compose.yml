@@ -1,0 +1,17 @@
+version: '2'
+services:
+  mongodb:
+    image: mongo:3.4
+    container_name: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - '/data/mongo:/data/db'
+    command: mongod
+  koa_test:
+    build: .
+    ports:
+      - '3000:3000'
+    container_name: koa_test
+    depends_on:
+      - mongodb

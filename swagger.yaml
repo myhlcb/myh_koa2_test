@@ -1,0 +1,123 @@
+---
+swagger: '2.0'
+info:
+  #接口标题
+  title: 预约系统说明文档
+  version: 1.0.0
+paths:
+  /appointments:
+    get:
+      summary: 获取对应日期以及剩余预约
+      responses:
+        200:
+          description: 'successful operation'
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: true
+              data:
+                type: array
+                items:
+                  properties:
+                    _id:
+                      type: string
+                      description: '预约对应时间'
+                    count:
+                      type: number
+                      description: '剩余预约数目'
+
+          examples:
+            application/json: |-
+              {
+                "success": true,
+                "data": [ { "_id": "2019072809", "count": 6 }, { "_id": "2019072810", "count": 6 }]
+              }
+
+  /appointment:
+    post:
+      summary: 进行预约
+      parameters:
+        - name: orderTime
+          description: 预定时间
+          type: string
+          in: body
+          required: true
+          example: 2019-07-29T04:59:29.744Z
+        - name: orderName
+          description: 预定人名
+          type: string
+          in: body
+          required: true
+          example: 特朗普
+        - name: orderPhone
+          description: 预订电话
+          type: number
+          in: body
+          required: true
+          example: 13800000000
+      responses:
+        400:
+          description: failed operation
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: false
+              error:
+                type: string
+          examples:
+            application/json: |-
+              {
+                "success": false,
+                "error": "预约的时间格式不正确",
+                "code": 400 #400代表请求无效
+              }
+        200:
+          description: 'successful operation'
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: true
+              data:
+                type: object
+                description: 指标数据
+                properties:
+                  order_name:
+                    description: 预定人名
+                    type: number
+                  order_id:
+                    description: 订单号
+                    type: number
+                  order_phone:
+                    description: 预订电话
+                    type: number
+                  order_time:
+                    description: 预定时间(YYYYMMDDHH)
+                    type: string
+                  create_at:
+                    description: 订单创建时间
+                    type: date
+                  update_at:
+                    description: 订单更新时间
+                    type: date
+          examples:
+            application/json: |-
+              {
+                "success": true,
+                "data": {
+                  "_id": "5d3c697c62fe8113eb864b4a",
+                  "order_name": "ald",
+                  "order_id": "09e70cb1-0f3e-4240-87b1-459e842ffc3d",
+                  "order_phone": 13800000000,
+                  "order_time": "2019072912",
+                  "create_at": "2019-07-27T15:10:52.442Z",
+                  "update_at": "2019-07-27T15:10:52.442Z",
+                  "__v": 0,
+                  "id": "5d3c697c62fe8113eb864b4a"
+                }
+              }
