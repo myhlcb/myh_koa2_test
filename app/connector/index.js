@@ -4,7 +4,7 @@ const {
 } = require('../../config/');
 
 const db = mongoose.createConnection(`mongodb://${host}:${port}/${database}`);
-console.log(`mongodb://${host}:${port}/${database}`, 11111);
+console.log(`get mongodb uri: mongodb://${host}:${port}/${database}`);
 db.on('connected', () => {
   console.log('connect success');
 });
