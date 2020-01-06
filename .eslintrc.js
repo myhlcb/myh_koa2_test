@@ -24,5 +24,10 @@ module.exports = {
     'no-unused-expressions': 0,
     'func-names': 0,
     'import/no-dynamic-require': 0,
+    'func-call-spacing': 0,
+    'no-spaced-func': 0,
+    'object-curly-spacing': 0,
+    'object-curly-spacing': 0,
+    'linebreak-style': 0,
   },
 };
