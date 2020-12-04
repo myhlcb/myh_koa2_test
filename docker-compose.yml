@@ -1,17 +1,25 @@
 version: '2'
 services:
-  mongodb:
-    image: mongo:3.4
-    container_name: mongo
-    ports:
-      - '27017:27017'
-    volumes:
-      - '/data/mongo:/data/db'
-    command: mongod
-  koa_test:
-    build: .
-    ports:
-      - '3000:3000'
-    container_name: koa_test
-    depends_on:
-      - mongodb
+    koa_test:
+        build: .
+        container_name: "koa_test"
+        ports:
+            - 3000:3000
+        links:
+            - mongodb
+        depends_on:
+            - mongodb
+        environment:
+          - MONGO_URL=mongodb://mongodb:27017/app_development
+    mongodb:
+        image: mongo:3.4
+        container_name: "mongodb"
+        environment:
+          - MONGO_INITDB_DATABASE=test
+          - MONGO_DATA_DIR=/data/db
+          - MONGO_LOG_DIR=/dev/null
+        volumes:
+          - ./data/db:/data/db
+        ports:
+            - 27017:27017
+        command: mongod --smallfiles --logpath=/dev/null # --quiet
